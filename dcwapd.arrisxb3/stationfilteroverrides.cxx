@@ -35,7 +35,7 @@ public:
     //creating a  filter override for an existing override...
   }
 
-  virtual ~SingleStationFilterOverride() {}
+  virtual ~SingleStationFilterOverride() = default;
 
   const ::dcw::MacAddress& GetMacAddress() const {
     return _stationMacAddress;

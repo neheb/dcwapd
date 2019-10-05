@@ -18,7 +18,7 @@ struct SingleFilter :
 
   SingleFilter(const ::dcw::FileTrafficFilterProfile& rhv) :
     ::dcw::FileTrafficFilterProfile(rhv) {}
-  virtual ~SingleFilter() {}
+  virtual ~SingleFilter() = default;
   virtual void GetValue(const char * const name, ::ccspwrapper::Tr181Scalar& value) {
     //theres only one value... the name...
     value = this->GetName();

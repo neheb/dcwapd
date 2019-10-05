@@ -9,11 +9,11 @@ namespace dcw {
 class FileTrafficFilterProfile : public CFileTrafficFilterProfile {
 public:
   FileTrafficFilterProfile(const char * const name, const char * const filename);
-  virtual ~FileTrafficFilterProfile();
+  ~FileTrafficFilterProfile() final;
   FileTrafficFilterProfile(const FileTrafficFilterProfile& rhv); //no reason this cant be copied
 
   const char *GetFilename() const;
-  virtual FILE *fopen() const;
+  FILE *fopen() const final;
 
 private:
   const std::string _filename;

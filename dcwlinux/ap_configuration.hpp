@@ -24,7 +24,7 @@ struct APConfigurationProvider {
   typedef std::set<std::string>                         SsidSet;
   typedef std::map<dcw::MacAddress, std::string>        StationTFPMap;
 
-  virtual ~APConfigurationProvider(){}
+  virtual ~APConfigurationProvider() = default;
   virtual void InstanciateCFileTrafficFilterProfiles(CFTFPList& output) const = 0; //WARNING: caller MUST delete!
   virtual void GetPrimarySsids(SsidSet& output) const = 0;
   virtual void GetDataSsids(SsidSet& output, const char * const primarySsid) const = 0;
@@ -37,7 +37,7 @@ class APConfiguration : public dcw::DevicePolicy {
 
 public:
   explicit APConfiguration(const APConfigurationProvider& initialConfiguration);
-  virtual ~APConfiguration();
+  ~APConfiguration() final;
 
   void Apply(MacRemapperDriver& driver, VAPManager& vapman, ::dcw::EventReactor& eventReactor) const;
 
@@ -45,8 +45,8 @@ public:
 
   void Dump() const;
 
-  virtual const dcw::TrafficFilterProfile& GetTrafficFilterProfile(const dcw::MacAddress& device) const;
-  virtual void FilterPermittedDataChannels(const dcw::MacAddress& device, const unsigned deviceTotalCapableDataChannels, dcw::BasicNetwork::ChannelSet& allowedDataChannels) const;
+  const dcw::TrafficFilterProfile& GetTrafficFilterProfile(const dcw::MacAddress& device) const override;
+  void FilterPermittedDataChannels(const dcw::MacAddress& device, const unsigned deviceTotalCapableDataChannels, dcw::BasicNetwork::ChannelSet& allowedDataChannels) const override;
 
 
 private:

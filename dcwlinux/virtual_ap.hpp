@@ -23,7 +23,7 @@ public:
     ::dcw::TrafficSorter&         trafficSorter,
     ::dcw::EventReactor&          eventReactor
   );
-  virtual ~VirtualAP();
+  ~VirtualAP() final;
 
   //XXX should ultimately implement these functons...
   //XXX this way things this object can signal the controller to correctly notify stations

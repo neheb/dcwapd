@@ -10,7 +10,7 @@ namespace dcw {
 class CFileTrafficFilterProfile : public TrafficFilterProfile {
 public:
   explicit CFileTrafficFilterProfile(const char * const name);
-  virtual ~CFileTrafficFilterProfile();
+  ~CFileTrafficFilterProfile() override;
   CFileTrafficFilterProfile(const CFileTrafficFilterProfile& rhv); //no reason this can't be copied...
 
   virtual std::FILE *fopen() const = 0;

@@ -21,7 +21,7 @@ struct SingleStationDataChannel : public ::ccspwrapper::Tr181ConfigProvider {
     _macAddr(macAddr),
     _singleNetwork(singleNetwork)
     {}
-  virtual ~SingleStationDataChannel() {}
+  virtual ~SingleStationDataChannel() = default;
 
   virtual void GetValue(const char * const name, ::ccspwrapper::Tr181Scalar& value) {
 
@@ -60,7 +60,7 @@ struct SingleStation :
     _dataChannels(dataChannels),
     _trafficFilterProfile(trafficFilterProfile)
     {}
-  virtual ~SingleStation() {}
+  virtual ~SingleStation() = default;
   virtual void GetValue(const char * const name, ::ccspwrapper::Tr181Scalar& value) {
     //Station.X. values...
     if (strcmp(name, "PrimaryMACAddress") == 0) {
