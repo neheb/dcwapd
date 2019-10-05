@@ -6,14 +6,14 @@
 namespace dcw {
 
 struct BasicChannel {
-  virtual ~BasicChannel() {}
+  virtual ~BasicChannel() = default;
   virtual const char *GetSsidName() const = 0;
 };
 
 struct BasicNetwork {
   typedef std::set<const ::dcw::BasicChannel *> ChannelSet;
 
-  virtual ~BasicNetwork() {}
+  virtual ~BasicNetwork() = default;
   virtual const BasicChannel& GetPrimaryChannel() const = 0;
   virtual void GetDataChannels(ChannelSet& output) const = 0;
 };

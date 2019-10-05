@@ -9,7 +9,7 @@ struct Message;
 struct MacAddress;
 
 struct MessageSocket : public virtual EventReactor::IOProvider {
-  virtual ~MessageSocket() {}
+  virtual ~MessageSocket() = default;
   virtual void ReceiveMessage(MacAddress& source, Message& msg) = 0;
   virtual void TransmitMessage(const MacAddress& dest, const Message& msg) = 0;
   virtual void GetSourceMacAddress(MacAddress& source) = 0;

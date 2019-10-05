@@ -10,7 +10,7 @@ namespace dcw {
 
 
 struct TelemetryCollector {
-  virtual ~TelemetryCollector() {}
+  virtual ~TelemetryCollector() = default;
 
   virtual void Telemetry_OnStationUpdate(const BasicNetwork& network, const MacAddress& primaryMacAddr, const TrafficPolicy::DataChannelMap& dataChannels, const TrafficFilterProfile *trafficFilterProfile) = 0;
   virtual void Telemetry_OnForgetStation(const BasicNetwork& network, const MacAddress& primaryMacAddr) = 0;
