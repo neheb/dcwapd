@@ -102,12 +102,11 @@ MacRemapperDriver::~MacRemapperDriver() {
 
 void MacRemapperDriver::Dump() const {
   char linebuf[2048];
-  FILE *f;
 
   //re-opening the driver each time for a dump guarantees
   //us a refreshed output as the driver generates this
   //report only once per open() on the first read() call
-  f = fopen(_driverFilename, "r");
+  auto f = fopen(_driverFilename, "r");
   if (f == NULL) {
     throw DumpFailedException();
   }
@@ -147,13 +146,13 @@ void MacRemapperDriver::ParseAndLoadFilter(const ::dcw::CFileTrafficFilterProfil
 }
 
 void MacRemapperDriver::ApplyClientTrafficPolicy(const dcw::MacAddress& primaryAddr, const dcw::TrafficPolicy& policy) {
-  struct mrm_remap_entry re;
+  struct mrm_remap_entry re = {};
   ::dcw::TrafficPolicy::DataChannelMap dataChannels;
 
   dcwloginfof("Applying MRM remap for device %s using traffic filter profile: %s\n", primaryAddr.ToString().c_str(), policy.trafficFilterProfile->GetName());
 
   //first filter out the unbonded data channels (NULL BasicChannel*)
-  for (::dcw::TrafficPolicy::DataChannelMap::const_iterator i = policy.dataChannels.begin() ; i != policy.dataChannels.end(); i++) {
+  for (auto i = policy.dataChannels.begin() ; i != policy.dataChannels.end(); i++) {
     if (i->second != NULL) {
       dataChannels[i->first] = i->second;
     }
@@ -174,24 +173,23 @@ void MacRemapperDriver::ApplyClientTrafficPolicy(const dcw::MacAddress& primaryA
   }
 
   //populate our remap ioctl()
-  memset(&re, 0, sizeof(re));
   strncpy(re.filter_name, policy.trafficFilterProfile->GetName(), sizeof(re.filter_name));
   memcpy(re.match_macaddr, primaryAddr.Value, sizeof(re.match_macaddr));
 
   //add each of the replacements into the remap ioctl() list...
-  for (::dcw::TrafficPolicy::DataChannelMap::const_iterator channel = dataChannels.begin(); channel != dataChannels.end(); ++channel) {
+  for (auto channel = dataChannels.begin(); channel != dataChannels.end(); ++channel) {
     //copy over the replacement MAC address...
-    const ::dcw::MacAddress& dest = channel->first;
+    const auto& dest = channel->first;
     memcpy(re.replace[re.replace_count].macaddr, dest.Value, sizeof(re.replace[re.replace_count].macaddr));
 
     //do we have an interface to remap to?
-    const BrctlChannel * const btctlChannel = dynamic_cast<const BrctlChannel*>(channel->second);
+    const auto btctlChannel = dynamic_cast<const BrctlChannel*>(channel->second);
     if (btctlChannel != NULL) {
       if (btctlChannel->GetIfName() != NULL) {
         strncpy(re.replace[re.replace_count].ifname, btctlChannel->GetIfName(), sizeof(re.replace[re.replace_count].ifname));
       }
     }
-    
+
     //increment the replacement count...
     ++re.replace_count;
   }
@@ -206,7 +204,7 @@ void MacRemapperDriver::RemoveClientTrafficPolicy(const dcw::MacAddress& primary
   struct mrm_remap_entry re;
 
   dcwloginfof("Removing any MRM remap for device %s\n", primaryAddr.ToString().c_str());
-  
+
   memcpy(re.match_macaddr, primaryAddr.Value, sizeof(re.match_macaddr));
   if (ioctl(_fd, MRM_DELETEREMAP, &re) == -1) {
     //if the ioctl() comes back with "EINVAL" error,

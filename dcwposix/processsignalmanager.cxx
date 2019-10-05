@@ -32,7 +32,7 @@ ProcessSignalManager::ProcessSignalManager() {
 ProcessSignalManager::~ProcessSignalManager() {
   //restore all the preserved signals...
   //there should be none...
-  for (SignalMapPreserve::const_iterator i = _sigmapPreserve.begin(); i != _sigmapPreserve.end(); i++) {
+  for (auto i = _sigmapPreserve.begin(); i != _sigmapPreserve.end(); i++) {
     dcwlogwarnf("Restoring preserved process signal #%d that was NOT unregistered before this objects deconstruction!\n", i->first);
     signal(i->first, i->second);
   }
@@ -40,7 +40,7 @@ ProcessSignalManager::~ProcessSignalManager() {
 }
 
 void ProcessSignalManager::RegisterEventHandler(const int signum, ::dcwposix::ProcessSignalManager::EventHandler& eventHandler) {
-  SignalMap::iterator i = _sigmap.find(signum);
+  auto i = _sigmap.find(signum);
   if (i == _sigmap.end()) {
     //be sure to preseve the old signal when inserting a new "unseen" signal
     _sigmap[signum].insert(&eventHandler);
@@ -53,7 +53,7 @@ void ProcessSignalManager::RegisterEventHandler(const int signum, ::dcwposix::Pr
 }
 
 void ProcessSignalManager::UnRegisterEventHandler(const int signum, ::dcwposix::ProcessSignalManager::EventHandler& eventHandler) {
-  SignalMap::iterator i = _sigmap.find(signum);
+  auto i = _sigmap.find(signum);
 
   if (i == _sigmap.end()) {
     dcwlogwarnf("Attempting to unregister handler %p non-registered process signal #%d\n", &eventHandler, signum);
@@ -84,7 +84,7 @@ void ProcessSignalManager::OnSignal(int signum) {
     dcwlogerrf("%s\n", "No signal manager instance!");
     return;
   }
-  SignalMap::const_iterator i = _sigman->_sigmap.find(signum);
+  auto i = _sigman->_sigmap.find(signum);
 
   if (i == _sigman->_sigmap.end()) {
     //defensive... should never get here...
@@ -93,7 +93,7 @@ void ProcessSignalManager::OnSignal(int signum) {
   }
 
   //fire off this signal to each registered handler...
-  for (SignalHandlerSet::const_iterator handlerIter = i->second.begin(); handlerIter != i->second.end(); handlerIter++) {
+  for (auto handlerIter = i->second.begin(); handlerIter != i->second.end(); handlerIter++) {
     (*handlerIter)->OnSignal(signum);
   }
 }

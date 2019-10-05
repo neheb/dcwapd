@@ -31,8 +31,8 @@ Message::Message(const enum dcwmsg_id mid) {
 }
 
 Message::Message(const Message& rhv) {
-  const struct dcwmsg *rhv_m = &rhv;
-  struct dcwmsg *lhv_m = this;
+  const auto rhv_m = &rhv;
+  auto lhv_m = this;
 
   std::memcpy(lhv_m, rhv_m, sizeof(struct dcwmsg));
 }

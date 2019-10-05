@@ -53,7 +53,7 @@ const char *StringTrafficFilterProfile::GetContents() const {
 }
 
 FILE *StringTrafficFilterProfile::fopen() const {
-  FILE * const result = ::fmemopen(const_cast<char*>(_contents.c_str()), _contents.length(), "r");
+  const auto result = ::fmemopen(const_cast<char*>(_contents.c_str()), _contents.length(), "r");
   if (result == NULL) throw FMemOpenFailedException();
   return result;
 }

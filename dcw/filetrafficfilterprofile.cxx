@@ -52,7 +52,7 @@ const char *FileTrafficFilterProfile::GetFilename() const {
 }
 
 FILE *FileTrafficFilterProfile::fopen() const {
-  FILE * const result = ::fopen(GetFilename(), "r");
+  const auto result = ::fopen(GetFilename(), "r");
   if (result == NULL) throw FOpenFailedException(GetFilename());
   return result;
 }

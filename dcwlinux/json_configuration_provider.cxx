@@ -48,7 +48,7 @@ public:
     if (!jp.HasMember("virtualaps")) {
       throw JSONParserException("JSON configuration does not have \"virtualaps\"");
     }
-    const JSONValue& virtualaps = jp["virtualaps"];
+    const auto& virtualaps = jp["virtualaps"];
     if (!virtualaps.IsObject()) {
       throw JSONParserException("JSON configuration \"virtualaps\" is not an object");
     }
@@ -60,7 +60,7 @@ public:
       if (!i->value.IsObject()) {
         throw JSONParserException("JSON configuration \"virtualaps\" contains a value which is not an object");
       }
-      PrimaryChannel& pc = _primaryChannels[i->name.GetString()];
+      auto& pc = _primaryChannels[i->name.GetString()];
 
       if (i->value.HasMember("bridge")) {
         if (!i->value["bridge"].IsString()) {
@@ -70,7 +70,7 @@ public:
       }
 
       if (i->value.HasMember("datachannels")) {
-        const JSONValue& datachannels = i->value["datachannels"];
+        const auto& datachannels = i->value["datachannels"];
         if (!datachannels.IsObject()) {
           throw JSONParserException("JSON configuration \"datachannels\" is not an object");
         }
@@ -96,7 +96,7 @@ public:
     if (!jp.HasMember("stations")) {
       return; //nothing more to do...
     }
-    const JSONValue& stations = jp["stations"];
+    const auto& stations = jp["stations"];
     if (!stations.IsObject()) {
       throw JSONParserException("JSON configuration \"stations\" is not an object");
     }

@@ -31,15 +31,14 @@ FilterdirScanner::~FilterdirScanner() {
 
 
 void FilterdirScanner::Scan(FileFilterProfileList& output) {
-  DIR *d;
   struct dirent *de;
   std::string filterName;
   std::string filterFilePath;
-  static const char matchExtension[] = ".tfp";
+  static const auto matchExtension = ".tfp";
 
   dcwlogdbgf("Scanning directory \"%s\" for filters...\n", _path.c_str());
 
-  d = opendir(_path.c_str());
+  auto d = opendir(_path.c_str());
   if (d == NULL) {
     dcwlogerrf("opendir('%s') failed: %s\n", _path.c_str(), strerror(errno));
     throw FilterDirScanFailed();

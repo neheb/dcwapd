@@ -138,10 +138,9 @@ void Controller::OnStationJoin(const MacAddress& primaryMacAddr, const Message& 
 
   //start forming reply
   Message reply(DCWMSG_AP_ACCEPT_STA);
-  BasicNetwork::ChannelSet::const_iterator apdc_iter;
   reply.ap_accept_sta.data_ssid_count = static_cast<unsigned int>(apDataChannels.size());
   unsigned i = 0;
-  for (apdc_iter = apDataChannels.begin(); apdc_iter != apDataChannels.end(); ++apdc_iter, i++) {
+  for (auto apdc_iter = apDataChannels.begin(); apdc_iter != apDataChannels.end(); ++apdc_iter, i++) {
     state.permittedChannels[(*apdc_iter)->GetSsidName()] = *apdc_iter;
     std::strncpy(reply.ap_accept_sta.data_ssids[i], (*apdc_iter)->GetSsidName(), sizeof(reply.ap_accept_sta.data_ssids[i]));
   }
@@ -158,7 +157,7 @@ void Controller::OnStationJoin(const MacAddress& primaryMacAddr, const Message& 
 }
 
 void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message& msg) {
-  const struct dcwmsg_sta_unjoin& m = msg.sta_unjoin;
+  const auto& m = msg.sta_unjoin;
   dcwlogdbgf("Got a station unjoin request from %s\n", primaryMacAddr.ToString().c_str());
 
   //tell telemetry to forget this station no matter what...
@@ -193,7 +192,7 @@ void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message
   //remove any channel bondings matching the provided data channel mac addresses
   for (unsigned i = 0; i < m.data_macaddr_count; i++) {
     const ::dcw::MacAddress dcaddr(m.data_macaddrs[i]);
-    ::dcw::TrafficPolicy::DataChannelMap::iterator dcmEntry = state.policy.dataChannels.find(dcaddr);
+    auto dcmEntry = state.policy.dataChannels.find(dcaddr);
     if (dcmEntry == state.policy.dataChannels.end()) continue;
     if (dcmEntry->second == NULL) {
       dcwlogwarnf("Data channel MAC address %s on client %s is not currently bonded\n", dcaddr.ToString().c_str(), primaryMacAddr.ToString().c_str());
@@ -204,7 +203,7 @@ void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message
   }
 
   //does this client have any more bonded channels?
-  for (::dcw::TrafficPolicy::DataChannelMap::iterator dcmIter = state.policy.dataChannels.begin();
+  for (auto dcmIter = state.policy.dataChannels.begin();
        dcmIter != state.policy.dataChannels.end(); dcmIter++) {
     if (dcmIter->second != NULL) {
       //yup... the client is still bonded to something...
@@ -232,11 +231,11 @@ void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message
 }
 
 void Controller::OnStationAck(const MacAddress& primaryMacAddr, const Message& msg) {
-  const struct dcwmsg_sta_ack& m = msg.sta_ack;
+  const auto& m = msg.sta_ack;
   dcwlogdbgf("Got a station ACK from %s\n", primaryMacAddr.ToString().c_str());
 
   // first make sure this client has actually sent a join first...
-  ClientStateMap::iterator client = _clients.find(primaryMacAddr);
+  auto client = _clients.find(primaryMacAddr);
   if (client == _clients.end()) {
     dcwlogerrf("Got a client ACK without a station join from %s\n", primaryMacAddr.ToString().c_str());
     Message reply(DCWMSG_AP_REJECT_STA);
@@ -254,7 +253,7 @@ void Controller::OnStationAck(const MacAddress& primaryMacAddr, const Message& m
 
     //ensure that the SSID is permitted...
     const std::string bondedSsid(m.bonded_data_channels[bcIdx].ssid, strnlen(m.bonded_data_channels[bcIdx].ssid, sizeof(m.bonded_data_channels[bcIdx].ssid)));
-    const ClientState::PermittedChannelMap::const_iterator permittedChannel = state.permittedChannels.find(bondedSsid);
+    const auto permittedChannel = state.permittedChannels.find(bondedSsid);
     if (permittedChannel == state.permittedChannels.end()) {
       dcwlogerrf("Got a client ACK with an invalid SSID from %s\n", primaryMacAddr.ToString().c_str());
       Message reply(DCWMSG_AP_REJECT_STA);
@@ -300,10 +299,10 @@ void Controller::OnStationAck(const MacAddress& primaryMacAddr, const Message& m
 }
 
 void Controller::OnStationNack(const MacAddress& primaryMacAddr, const Message& msg) {
-  const struct dcwmsg_sta_nack& m_src = msg.sta_nack;
+  const auto& m_src = msg.sta_nack;
 
   Message unjoinMsg(DCWMSG_STA_UNJOIN);
-  struct dcwmsg_sta_unjoin& m_dst = unjoinMsg.sta_unjoin;
+  auto& m_dst = unjoinMsg.sta_unjoin;
 
   dcwlogdbgf("Got a station NACK from %s Processing as unjoin\n", primaryMacAddr.ToString().c_str());
   m_dst.data_macaddr_count = m_src.data_macaddr_count;
