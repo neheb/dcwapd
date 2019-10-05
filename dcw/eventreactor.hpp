@@ -6,19 +6,19 @@ namespace dcw {
 
 struct EventReactor {
   struct Timer {
-    virtual ~Timer() {}
+    virtual ~Timer() = default;
     virtual void OnFire() = 0;
   };
 
   struct IOProvider {
-    virtual ~IOProvider() {}
+   virtual ~IOProvider() = default;
   };
 
   struct IOSubscriber {
-    virtual ~IOSubscriber() {}
+    virtual ~IOSubscriber() = default;
     virtual void OnIOReady(IOProvider& iop) = 0;
   };
-  virtual ~EventReactor() {}
+  virtual ~EventReactor() = default;
   virtual void Run() = 0;
   virtual void Stop() = 0;
   virtual void RegisterIOSubscriber(IOSubscriber& sub, IOProvider& pub) = 0;

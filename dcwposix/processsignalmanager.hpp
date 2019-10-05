@@ -14,7 +14,7 @@ class ProcessSignalManager {
 
 public:
   struct EventHandler {
-    virtual ~EventHandler() {}
+    virtual ~EventHandler() = default;
     virtual void OnSignal(int signum) = 0;
   };
 

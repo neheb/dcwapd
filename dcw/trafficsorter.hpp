@@ -20,7 +20,7 @@ struct TrafficPolicy {
 };
 
 struct TrafficSorter {
-  virtual ~TrafficSorter() {}
+  virtual ~TrafficSorter() = default;
 
   virtual void ApplyClientTrafficPolicy(const MacAddress& primaryAddr, const TrafficPolicy& policy) = 0;
   virtual void RemoveClientTrafficPolicy(const MacAddress& primaryAddr) = 0;

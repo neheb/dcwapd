@@ -9,7 +9,7 @@ class TrafficFilterProfile;
 struct MacAddress;
 
 struct DevicePolicy {
-  virtual ~DevicePolicy() {}
+  virtual ~DevicePolicy() = default;
   virtual const TrafficFilterProfile& GetTrafficFilterProfile(const MacAddress& device) const = 0;
   virtual void FilterPermittedDataChannels(const MacAddress& device, const unsigned deviceTotalCapableDataChannels, BasicNetwork::ChannelSet& allowedDataChannels) const = 0;
 };
