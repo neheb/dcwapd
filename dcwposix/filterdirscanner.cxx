@@ -35,7 +35,7 @@ void FilterdirScanner::Scan(FileFilterProfileList& output) {
   struct dirent *de;
   std::string filterName;
   std::string filterFilePath;
-  static const char matchExtension[] = ".tfp";
+  static const char *matchExtension = ".tfp";
 
   dcwlogdbgf("Scanning directory \"%s\" for filters...\n", _path.c_str());
 

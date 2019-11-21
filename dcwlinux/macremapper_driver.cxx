@@ -71,7 +71,7 @@ struct DumpFailedException : public std::exception {
 };
 } // namespace
 
-const char _driverFilename[] = "/proc/macremapctl";
+static const char _driverFilename[] = "/proc/macremapctl";
 
 MacRemapperDriver::MacRemapperDriver() {
   dcwlogdbgf("Attempting to open the MAC address remapper driver (MRM): %s\n", _driverFilename);
