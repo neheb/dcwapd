@@ -2,12 +2,12 @@
 #ifndef CONTROLLER_H_INCLUDED
 #define CONTROLLER_H_INCLUDED
 
-#include "./devicepolicy.h"
-#include "./eventreactor.h"
-#include "./messagesocket.h"
-#include "./network.h"
-#include "./telemetrycollector.h"
-#include "./trafficsorter.h"
+#include "./devicepolicy.hpp"
+#include "./eventreactor.hpp"
+#include "./messagesocket.hpp"
+#include "./network.hpp"
+#include "./telemetrycollector.hpp"
+#include "./trafficsorter.hpp"
 
 #include <map>
 #include <string>

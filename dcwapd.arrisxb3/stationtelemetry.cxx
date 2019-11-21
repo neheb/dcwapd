@@ -1,7 +1,7 @@
 
 
-#include "./stationtelemetry.h"
-#include "./singlenetwork.h"
+#include "./stationtelemetry.hpp"
+#include "./singlenetwork.hpp"
 
 #include "ccspwrapper/tr181_config_provider.h"
 

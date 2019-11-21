@@ -1,7 +1,7 @@
 
-#include "./simplenetwork.h"
+#include "./simplenetwork.hpp"
 
-#include "./dcwlog.h"
+#include "./dcwlog.hpp"
 
 
 using namespace dcw;

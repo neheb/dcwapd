@@ -2,9 +2,9 @@
 #ifndef TRAFFICSORTER_H_INCLUDED
 #define TRAFFICSORTER_H_INCLUDED
 
-#include "./macaddress.h"
-#include "./network.h"
-#include "./trafficfilterprofile.h"
+#include "./macaddress.hpp"
+#include "./network.hpp"
+#include "./trafficfilterprofile.hpp"
 
 #include <map>
 

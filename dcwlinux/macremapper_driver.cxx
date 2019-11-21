@@ -1,4 +1,4 @@
-#include "./macremapper_driver.h"
+#include "./macremapper_driver.hpp"
 
 #include <cerrno>
 #include <cstdio>
@@ -14,10 +14,10 @@
 #include <macremapper_ioctl.h>
 #include <mrm_filter_conf_parser.h>
 
-#include "dcw/cfiletrafficfilterprofile.h"
-#include "dcw/dcwlog.h"
+#include "dcw/cfiletrafficfilterprofile.hpp"
+#include "dcw/dcwlog.hpp"
 
-#include "./brctlnetwork.h"
+#include "./brctlnetwork.hpp"
 
 #include <exception>
 

@@ -1,17 +1,17 @@
 
 #include <cstring>
 
-#include "dcwposix/processsignalmanager.h"
-#include "dcwposix/eventreactorexitsignaler.h"
-#include "dcwposix/selecteventreactor.h"
-#include "dcwposix/filterdirscanner.h"
+#include "dcwposix/processsignalmanager.hpp"
+#include "dcwposix/eventreactorexitsignaler.hpp"
+#include "dcwposix/selecteventreactor.hpp"
+#include "dcwposix/filterdirscanner.hpp"
 
-#include "dcwlinux/macremapper_driver.h"
-#include "dcwlinux/ap_configuration.h"
-#include "dcwlinux/vap_manager.h"
-#include "dcwlinux/json_configuration_provider.h"
+#include "dcwlinux/macremapper_driver.hpp"
+#include "dcwlinux/ap_configuration.hpp"
+#include "dcwlinux/vap_manager.hpp"
+#include "dcwlinux/json_configuration_provider.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <exception>
 

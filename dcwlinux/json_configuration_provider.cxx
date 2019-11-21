@@ -1,11 +1,11 @@
 
 
-#include "./json_configuration_provider.h"
+#include "./json_configuration_provider.hpp"
 
 #include "./jsonparser.ixx"
 
-#include "dcw/macaddress.h"
-#include "dcwposix/filterdirscanner.h"
+#include "dcw/macaddress.hpp"
+#include "dcwposix/filterdirscanner.hpp"
 
 namespace dcwlinux {
 

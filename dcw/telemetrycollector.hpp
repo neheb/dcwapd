@@ -2,9 +2,9 @@
 #define TELEMETRYCOLLECTOR_H_INCLUDED
 
 
-#include "./network.h"
-#include "./macaddress.h"
-#include "./trafficsorter.h" //DataChannelMap
+#include "./network.hpp"
+#include "./macaddress.hpp"
+#include "./trafficsorter.hpp" //DataChannelMap
 
 namespace dcw {
 

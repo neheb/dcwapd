@@ -2,7 +2,7 @@
 #define SIMPLENETWORK_H_INCLUDED
 
 
-#include "./network.h"
+#include "./network.hpp"
 
 #include <list>
 #include <string>

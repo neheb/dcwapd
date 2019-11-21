@@ -1,8 +1,8 @@
 
 
-#include "./brctlnetwork.h"
+#include "./brctlnetwork.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <exception>
 

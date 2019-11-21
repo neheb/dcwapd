@@ -1,10 +1,10 @@
 
-#include "./ap_configuration.h"
-#include "./macremapper_driver.h"
-#include "./vap_manager.h"
-#include "./virtual_ap.h"
+#include "./ap_configuration.hpp"
+#include "./macremapper_driver.hpp"
+#include "./vap_manager.hpp"
+#include "./virtual_ap.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 
 #include <exception>

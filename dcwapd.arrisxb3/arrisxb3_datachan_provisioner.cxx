@@ -1,8 +1,8 @@
 
 
-#include "./arrisxb3_datachan_provisioner.h"
+#include "./arrisxb3_datachan_provisioner.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <exception>
 

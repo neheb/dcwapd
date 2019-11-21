@@ -1,10 +1,10 @@
 
 
-#include "./vap_manager.h"
-#include "./virtual_ap.h"
+#include "./vap_manager.hpp"
+#include "./virtual_ap.hpp"
 
-#include "dcw/dcwlog.h"
-#include "dcw/devicepolicy.h"
+#include "dcw/dcwlog.hpp"
+#include "dcw/devicepolicy.hpp"
 
 #include <cstring>
 

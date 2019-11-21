@@ -1,9 +1,9 @@
 #ifndef VIRTUAL_AP_H_INCLUDED
 #define VIRTUAL_AP_H_INCLUDED
 
-#include "./brctlnetwork.h"
-#include "dcw/controller.h"
-#include "dcwposix/selectablemessagesocket.h"
+#include "./brctlnetwork.hpp"
+#include "dcw/controller.hpp"
+#include "dcwposix/selectablemessagesocket.hpp"
 
 namespace dcwlinux {
 

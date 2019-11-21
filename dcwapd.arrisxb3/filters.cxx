@@ -1,10 +1,10 @@
 
-#include "./filters.h"
+#include "./filters.hpp"
 
 
-#include "dcw/filetrafficfilterprofile.h"
-#include "dcwposix/filterdirscanner.h"
-#include "dcwlinux/macremapper_driver.h"
+#include "dcw/filetrafficfilterprofile.hpp"
+#include "dcwposix/filterdirscanner.hpp"
+#include "dcwlinux/macremapper_driver.hpp"
 #include "ccspwrapper/tr181_config_provider.h"
 
 namespace {

@@ -1,10 +1,10 @@
 
 
-#include "./selectablemessagesocket.h"
-#include "dcw/macaddress.h"
-#include "dcw/message.h"
+#include "./selectablemessagesocket.hpp"
+#include "dcw/macaddress.hpp"
+#include "dcw/message.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <dcwsocket.h>
 

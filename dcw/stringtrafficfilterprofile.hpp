@@ -2,7 +2,7 @@
 #define STRINGTRAFFICFILTERPROFILE_H_INCLUDED
 
 
-#include "./cfiletrafficfilterprofile.h"
+#include "./cfiletrafficfilterprofile.hpp"
 
 namespace dcw {
 

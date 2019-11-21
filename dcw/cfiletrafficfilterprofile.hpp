@@ -1,7 +1,7 @@
 #ifndef CFILETRAFFICFILTERPROFILE_H_INCLUDED
 #define CFILETRAFFICFILTERPROFILE_H_INCLUDED
 
-#include "./trafficfilterprofile.h"
+#include "./trafficfilterprofile.hpp"
 
 #include <cstdio>
 

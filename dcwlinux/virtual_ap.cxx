@@ -1,7 +1,7 @@
 
-#include "./virtual_ap.h"
+#include "./virtual_ap.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 using namespace dcwlinux;
 

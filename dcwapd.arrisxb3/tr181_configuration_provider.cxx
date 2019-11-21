@@ -1,8 +1,8 @@
-#include "./tr181_configuration_provider.h"
+#include "./tr181_configuration_provider.hpp"
 
 #include "ccspwrapper/tr181_collection_registry.h"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <cstring>
 
