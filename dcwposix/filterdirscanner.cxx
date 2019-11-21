@@ -41,7 +41,7 @@ void FilterdirScanner::Scan(FileFilterProfileList& output) {
 
   d = opendir(_path.c_str());
   if (d == NULL) {
-    dcwlogerrf("opendir('%s') failed: %s\n", _path.c_str(), strerror(errno));
+    dcwlogerrf("opendir('%s') failed: %m\n", _path.c_str());
     throw FilterDirScanFailed();
   }
 

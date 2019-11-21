@@ -66,7 +66,7 @@ void SelectEventReactor::Run() {
       if (errno == EINTR) {
         continue; //process was interrupted...
       }
-      dcwlogerrf("Event reactor select() failed: %s\n", strerror(errno));
+      dcwlogerrf("Event reactor select() failed: %m\n");
       sleep(1);
       continue;
     }
