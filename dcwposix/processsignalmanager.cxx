@@ -1,8 +1,8 @@
 
-#include "./processsignalmanager.h"
+#include "./processsignalmanager.hpp"
 
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <exception>
 

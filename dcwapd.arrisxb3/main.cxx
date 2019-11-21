@@ -1,19 +1,19 @@
 
 #include <unistd.h>
 
-#include "dcwposix/processsignalmanager.h"
-#include "dcwposix/eventreactorexitsignaler.h"
-#include "dcwposix/selecteventreactor.h"
-#include "dcwposix/filterdirscanner.h"
+#include "dcwposix/processsignalmanager.hpp"
+#include "dcwposix/eventreactorexitsignaler.hpp"
+#include "dcwposix/selecteventreactor.hpp"
+#include "dcwposix/filterdirscanner.hpp"
 
-#include "dcwlinux/macremapper_driver.h"
-#include "dcwlinux/ap_configuration.h"
-#include "dcwlinux/vap_manager.h"
+#include "dcwlinux/macremapper_driver.hpp"
+#include "dcwlinux/ap_configuration.hpp"
+#include "dcwlinux/vap_manager.hpp"
 
-#include "./tr181_configuration_provider.h"
-#include "./arrisxb3_datachan_provisioner.h"
+#include "./tr181_configuration_provider.hpp"
+#include "./arrisxb3_datachan_provisioner.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 struct MainRunTask : public ::dcwposix::EventReactorExitSignalHandler {
   Tr181ConfigurationProvider&        _config;

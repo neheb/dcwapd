@@ -1,7 +1,7 @@
 #ifndef FILTERDIRSCANNER_H_INCLUDED
 #define FILTERDIRSCANNER_H_INCLUDED
 
-#include "dcw/filetrafficfilterprofile.h"
+#include "dcw/filetrafficfilterprofile.hpp"
 
 #include <list>
 #include <string>

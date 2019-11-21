@@ -1,7 +1,7 @@
 #ifndef MESSAGESOCKET_H_INCLUDED
 #define MESSAGESOCKET_H_INCLUDED
 
-#include "./eventreactor.h"
+#include "./eventreactor.hpp"
 
 namespace dcw {
 

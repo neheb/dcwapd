@@ -1,7 +1,7 @@
 #ifndef ARRISXB3_DCW_H_INCLUDED
 #define ARRISXB3_DCW_H_INCLUDED
 
-#include "./singlenetwork.h"
+#include "./singlenetwork.hpp"
 #include "ccspwrapper/cdm_client.h"
 
 #include <string>

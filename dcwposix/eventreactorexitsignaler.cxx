@@ -1,6 +1,6 @@
 
-#include "./eventreactorexitsignaler.h"
-#include "dcw/eventreactor.h"
+#include "./eventreactorexitsignaler.hpp"
+#include "dcw/eventreactor.hpp"
 
 #include <csignal>
 

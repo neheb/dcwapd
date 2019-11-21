@@ -7,7 +7,7 @@
 
 
 
-#include "dcw/network.h"
+#include "dcw/network.hpp"
 
 #include <list>
 #include <string>

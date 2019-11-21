@@ -1,7 +1,7 @@
 #ifndef DEVICEPOLICY_H_INCLUDED
 #define DEVICEPOLICY_H_INCLUDED
 
-#include "./network.h"
+#include "./network.hpp"
 
 namespace dcw {
 

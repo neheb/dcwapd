@@ -1,8 +1,8 @@
 #ifndef SELECTABLEMESSAGESOCKET_H_INCLUDED
 #define SELECTABLEMESSAGESOCKET_H_INCLUDED
 
-#include "dcw/messagesocket.h"
-#include "./selecteventreactor.h"
+#include "dcw/messagesocket.hpp"
+#include "./selecteventreactor.hpp"
 
 extern "C" {
   typedef struct dcw_socket * dcw_socket_t;

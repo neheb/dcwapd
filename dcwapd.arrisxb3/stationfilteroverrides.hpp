@@ -4,7 +4,7 @@
 
 #include "ccspwrapper/tr181_sub_collection_provider.h"
 
-#include "dcwlinux/ap_configuration.h"
+#include "dcwlinux/ap_configuration.hpp"
 
 #include <map>
 

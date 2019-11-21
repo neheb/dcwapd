@@ -3,16 +3,16 @@
 
 
 
-#include "dcwlinux/ap_configuration.h"
+#include "dcwlinux/ap_configuration.hpp"
 #include "ccspwrapper/tr181_config_provider.h"
 #include "ccspwrapper/ccsp_abstractor.h"
 
-#include "./filters.h"
-#include "./singlenetwork.h"
-#include "./stationfilteroverrides.h"
-#include "./stationtelemetry.h"
+#include "./filters.hpp"
+#include "./singlenetwork.hpp"
+#include "./stationfilteroverrides.hpp"
+#include "./stationtelemetry.hpp"
 
-#include "./arrisxb3_dcw.h"
+#include "./arrisxb3_dcw.hpp"
 
 class Tr181ConfigurationProvider :
   public ::dcwlinux::APConfigurationProvider,

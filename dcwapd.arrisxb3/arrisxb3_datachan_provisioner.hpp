@@ -1,7 +1,7 @@
 #ifndef ARRISXB3_DATACHAN_PROVISIONER_H_INCLUDED
 #define ARRISXB3_DATACHAN_PROVISIONER_H_INCLUDED
 
-#include "./singlenetwork.h"
+#include "./singlenetwork.hpp"
 #include "ccspwrapper/cdm_client.h"
 
 #include <string>

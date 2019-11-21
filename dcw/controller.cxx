@@ -1,9 +1,9 @@
 
-#include "./controller.h"
-#include "./macaddress.h"
-#include "./message.h"
+#include "./controller.hpp"
+#include "./macaddress.hpp"
+#include "./message.hpp"
 
-#include "./dcwlog.h"
+#include "./dcwlog.hpp"
 
 #include <cstring>
 #include <exception>

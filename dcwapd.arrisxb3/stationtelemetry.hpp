@@ -3,7 +3,7 @@
 
 
 #include "ccspwrapper/tr181_sub_collection_provider.h"
-#include "dcw/telemetrycollector.h"
+#include "dcw/telemetrycollector.hpp"
 
 #include <pthread.h>
 

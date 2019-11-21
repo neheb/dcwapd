@@ -1,7 +1,7 @@
 
-#include "./selecteventreactor.h"
+#include "./selecteventreactor.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <cerrno>
 #include <cstring>

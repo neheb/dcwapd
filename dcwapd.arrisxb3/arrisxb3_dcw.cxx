@@ -1,8 +1,8 @@
 
 
-#include "./arrisxb3_dcw.h"
+#include "./arrisxb3_dcw.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <exception>
 

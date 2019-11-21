@@ -1,7 +1,7 @@
 #ifndef JSON_CONFIGURATION_PROVIDER_H_INCLUDED
 #define JSON_CONFIGURATION_PROVIDER_H_INCLUDED
 
-#include "./ap_configuration.h"
+#include "./ap_configuration.hpp"
 
 namespace dcwlinux {
 

@@ -1,6 +1,6 @@
 
 
-#include "./singlenetwork.h"
+#include "./singlenetwork.hpp"
 
 #include <cstring>
 #include <csignal>

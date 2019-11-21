@@ -1,7 +1,7 @@
 #ifndef MACREMAPPER_DRIVER_H_INCLUDED
 #define MACREMAPPER_DRIVER_H_INCLUDED
 
-#include "dcw/trafficsorter.h"
+#include "dcw/trafficsorter.hpp"
 
 namespace dcw {
   class CFileTrafficFilterProfile;

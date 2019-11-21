@@ -1,7 +1,7 @@
 
-#include "./filterdirscanner.h"
+#include "./filterdirscanner.hpp"
 
-#include "dcw/dcwlog.h"
+#include "dcw/dcwlog.hpp"
 
 #include <cerrno>
 #include <cstring>

@@ -2,7 +2,7 @@
 #define SELECTEVENTREACTOR_H_INCLUDED
 
 
-#include "dcw/eventreactor.h"
+#include "dcw/eventreactor.hpp"
 
 #include <map>
 #include <set>

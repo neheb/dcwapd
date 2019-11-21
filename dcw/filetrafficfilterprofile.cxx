@@ -1,5 +1,5 @@
 
-#include "./filetrafficfilterprofile.h"
+#include "./filetrafficfilterprofile.hpp"
 
 #include <cerrno>
 #include <cstring>

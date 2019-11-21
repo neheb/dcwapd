@@ -1,7 +1,7 @@
 #ifndef EVENTREACTOREXITSIGNALER_H_INCLUDED
 #define EVENTREACTOREXITSIGNALER_H_INCLUDED
 
-#include "./processsignalmanager.h"
+#include "./processsignalmanager.hpp"
 
 namespace dcw {
 struct EventReactor;
