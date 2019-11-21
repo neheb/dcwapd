@@ -53,7 +53,7 @@ public:
       throw JSONParserException("JSON configuration \"virtualaps\" is not an object");
     }
 
-    for (JSONValue::ConstMemberIterator i = virtualaps.MemberBegin(); i != virtualaps.MemberEnd(); i++) {
+    for (auto i = virtualaps.MemberBegin(); i != virtualaps.MemberEnd(); i++) {
       if (!i->name.IsString()) {
         throw JSONParserException("JSON configuration \"virtualaps\" contains a key which is not a string");
       }
@@ -101,7 +101,7 @@ public:
       throw JSONParserException("JSON configuration \"stations\" is not an object");
     }
 
-    for (JSONValue::ConstMemberIterator i = stations.MemberBegin(); i != stations.MemberEnd(); i++) {
+    for (auto i = stations.MemberBegin(); i != stations.MemberEnd(); i++) {
       if (!i->name.IsString()) {
         throw JSONParserException("JSON configuration \"stations\" contains a key which is not a string");
       }
@@ -126,14 +126,14 @@ public:
     ::dcwposix::FilterdirScanner dirScanner(_filterDirectory.c_str());
     dirScanner.Scan(ffpl);
 
-    for (::dcwposix::FilterdirScanner::FileFilterProfileList::const_iterator i = ffpl.begin(); i != ffpl.end(); i++) {
-      output.push_back(new ::dcw::FileTrafficFilterProfile(*i));
+    for (const auto &ffp : ffpl) {
+      output.push_back(new ::dcw::FileTrafficFilterProfile(ffp));
     }
   }
 
   virtual void GetPrimarySsids(SsidSet& output) const {
-    for (PrimaryChannelMap::const_iterator i = _primaryChannels.begin(); i != _primaryChannels.end(); i++) {
-      output.insert(i->first);
+    for (const auto &channel : _primaryChannels) {
+      output.insert(channel.first);
     }
   }
 
@@ -141,13 +141,13 @@ public:
     const PrimaryChannelMap::const_iterator pssid = _primaryChannels.find(primarySsid);
     if (pssid == _primaryChannels.end()) return;
 
-    for (DataChannelBridgeMap::const_iterator i = pssid->second.dataChannels.begin(); i != pssid->second.dataChannels.end(); i++) {
-      output.insert(i->first);
+    for (const auto &dssid : pssid->second.dataChannels) {
+      output.insert(dssid.first);
     }
   }
 
   virtual const char *GetSsidIfname(const char * const ssid) const {
-    PrimaryChannelMap::const_iterator pssid = _primaryChannels.find(ssid);
+    auto pssid = _primaryChannels.find(ssid);
     if (pssid != _primaryChannels.end()) {
       if (pssid->second.bridgeName.empty()) {
         return NULL;
@@ -156,8 +156,8 @@ public:
     }
 
     for (pssid = _primaryChannels.begin(); pssid != _primaryChannels.end(); pssid++) {
-      const DataChannelBridgeMap& dataChannels = pssid->second.dataChannels;
-      const DataChannelBridgeMap::const_iterator dc = dataChannels.find(ssid);
+      const auto dataChannels = pssid->second.dataChannels;
+      const auto dc = dataChannels.find(ssid);
       if (dc == dataChannels.end()) continue;
       if (dc->second.empty()) {
         return NULL;
@@ -168,8 +168,8 @@ public:
     return NULL;
   }
   virtual void GetStationTrafficFilterProfiles(StationTFPMap& output) const {
-    for (StationFilterMap::const_iterator i = _stationFilters.begin(); i != _stationFilters.end(); i++) {
-      output[i->first] = i->second;
+    for (const auto &profile : _stationFilters) {
+      output[profile.first] = profile.second;
     }
 
   }

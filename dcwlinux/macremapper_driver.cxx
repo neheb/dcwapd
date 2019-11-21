@@ -152,9 +152,9 @@ void MacRemapperDriver::ApplyClientTrafficPolicy(const dcw::MacAddress& primaryA
   dcwloginfof("Applying MRM remap for device %s using traffic filter profile: %s\n", primaryAddr.ToString().c_str(), policy.trafficFilterProfile->GetName());
 
   //first filter out the unbonded data channels (NULL BasicChannel*)
-  for (auto i = policy.dataChannels.begin() ; i != policy.dataChannels.end(); i++) {
-    if (i->second != NULL) {
-      dataChannels[i->first] = i->second;
+  for (const auto &dataChannel : policy.dataChannels) {
+    if (dataChannel.second != NULL) {
+      dataChannels[dataChannel.first] = dataChannel.second;
     }
   }
 
@@ -177,13 +177,13 @@ void MacRemapperDriver::ApplyClientTrafficPolicy(const dcw::MacAddress& primaryA
   memcpy(re.match_macaddr, primaryAddr.Value, sizeof(re.match_macaddr));
 
   //add each of the replacements into the remap ioctl() list...
-  for (auto channel = dataChannels.begin(); channel != dataChannels.end(); ++channel) {
+  for (const auto &dataChannel : dataChannels) {
     //copy over the replacement MAC address...
-    const auto& dest = channel->first;
+    const auto& dest = dataChannel.first;
     memcpy(re.replace[re.replace_count].macaddr, dest.Value, sizeof(re.replace[re.replace_count].macaddr));
 
     //do we have an interface to remap to?
-    const auto btctlChannel = dynamic_cast<const BrctlChannel*>(channel->second);
+    const auto btctlChannel = dynamic_cast<const BrctlChannel*>(dataChannel.second);
     if (btctlChannel != NULL) {
       if (btctlChannel->GetIfName() != NULL) {
         strncpy(re.replace[re.replace_count].ifname, btctlChannel->GetIfName(), sizeof(re.replace[re.replace_count].ifname));

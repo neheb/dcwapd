@@ -49,8 +49,8 @@ void Filters::PopulateConfigProviderCollection(::ccspwrapper::Tr181ConfigProvide
   //
   ::dcwlinux::APConfigurationProvider::CFTFPList filters;
   InstanciateCFileTrafficFilterProfiles(filters);
-  for (::dcwlinux::APConfigurationProvider::CFTFPList::const_iterator i = filters.begin(); i != filters.end(); i++) {
-    collection.push_back((SingleFilter*)*i);
+  for (const auto &filter : filters) {
+    collection.push_back((SingleFilter*)filter);
   }
 }
 
@@ -59,11 +59,11 @@ void Filters::InstanciateCFileTrafficFilterProfiles(::dcwlinux::APConfigurationP
     ::dcwposix::FilterdirScanner::FileFilterProfileList ffpl;
     ::dcwposix::FilterdirScanner dirScanner(_scanPath.c_str());
     dirScanner.Scan(ffpl);
-    for(::dcwposix::FilterdirScanner::FileFilterProfileList::const_iterator i = ffpl.begin(); i != ffpl.end(); i++) {
-      if (!::dcwlinux::MacRemapperDriver::ValidateFilter(*i)) continue;
+    for(const auto &ffp : ffpl) {
+      if (!::dcwlinux::MacRemapperDriver::ValidateFilter(ffp)) continue;
 
       //note: caller (either dcw config or ccsp/tr181) will cleanup
-      output.push_back(new SingleFilter(*i));
+      output.push_back(new SingleFilter(ffp));
     }
   }
   catch (...) {

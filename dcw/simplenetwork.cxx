@@ -48,8 +48,8 @@ const BasicChannel& SimpleNetwork::GetPrimaryChannel() const {
 }
 
 void SimpleNetwork::GetDataChannels(ChannelSet& output) const {
-  for (auto i = _dataChannels.begin(); i != _dataChannels.end(); i++) {
-    output.insert(&(*i));
+  for (const auto &_dataChannel : _dataChannels) {
+    output.insert(&_dataChannel);
   }
 }
 

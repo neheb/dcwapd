@@ -123,9 +123,9 @@ void SelectEventReactor::SleepMs(const unsigned milliseconds) const {
 
 void SelectEventReactor::updateNfds() {
   _nfds = 0;
-  for (IOSubMap::const_iterator subi = _ioSubs.begin(); subi != _ioSubs.end(); subi++) {
-    for (auto pubi = subi->second.begin(); pubi != subi->second.end(); pubi++) {
-      const int nfd = (*pubi)->GetSelectableFd() + 1;
+  for (const auto &sub : _ioSubs) {
+    for (const auto &pub : sub.second) {
+      const int nfd = pub->GetSelectableFd() + 1;
       if (nfd > _nfds) _nfds = nfd;
     }
   }

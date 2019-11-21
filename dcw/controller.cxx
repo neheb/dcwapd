@@ -140,11 +140,11 @@ void Controller::OnStationJoin(const MacAddress& primaryMacAddr, const Message& 
   Message reply(DCWMSG_AP_ACCEPT_STA);
   reply.ap_accept_sta.data_ssid_count = static_cast<unsigned int>(apDataChannels.size());
   unsigned i = 0;
-  for (auto apdc_iter = apDataChannels.begin(); apdc_iter != apDataChannels.end(); ++apdc_iter, i++) {
-    state.permittedChannels[(*apdc_iter)->GetSsidName()] = *apdc_iter;
-    std::strncpy(reply.ap_accept_sta.data_ssids[i], (*apdc_iter)->GetSsidName(), sizeof(reply.ap_accept_sta.data_ssids[i]));
+  for (const auto &apDataChannel : apDataChannels) {
+    state.permittedChannels[apDataChannel->GetSsidName()] = apDataChannel;
+    std::strncpy(reply.ap_accept_sta.data_ssids[i], apDataChannel->GetSsidName(), sizeof(reply.ap_accept_sta.data_ssids[i]));
   }
-  
+
   //reply back to the station letting it know which
   //MAC addresses and SSIDs it should use
   dcwlogdbgf("Telling station %s that it has %zu data channel(s) to use\n", primaryMacAddr.ToString().c_str(), apDataChannels.size());
@@ -203,9 +203,8 @@ void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message
   }
 
   //does this client have any more bonded channels?
-  for (auto dcmIter = state.policy.dataChannels.begin();
-       dcmIter != state.policy.dataChannels.end(); dcmIter++) {
-    if (dcmIter->second != NULL) {
+  for (const auto &dataChannel : state.policy.dataChannels) {
+    if (dataChannel.second != NULL) {
       //yup... the client is still bonded to something...
       //simply update the traffic sorter policy...
       dcwloginfof("Updating traffic policy for station: %s.\n", primaryMacAddr.ToString().c_str());
@@ -231,7 +230,7 @@ void Controller::OnStationUnjoin(const MacAddress& primaryMacAddr, const Message
 }
 
 void Controller::OnStationAck(const MacAddress& primaryMacAddr, const Message& msg) {
-  const auto& m = msg.sta_ack;
+  const auto &m = msg.sta_ack;
   dcwlogdbgf("Got a station ACK from %s\n", primaryMacAddr.ToString().c_str());
 
   // first make sure this client has actually sent a join first...

@@ -44,14 +44,13 @@ APConfiguration::~APConfiguration() {
 
 void APConfiguration::Apply(MacRemapperDriver& driver, VAPManager& vapman, ::dcw::EventReactor& eventReactor) const {
   //load the traffic filter profiles into the driver...
-  for (auto i = _trafficFilterProfiles.begin(); i != _trafficFilterProfiles.end(); i++) {
-    driver.ParseAndLoadFilter(*i->second); //XXX defensive check for NULL?
+  for (const auto &_trafficFilterProfile : _trafficFilterProfiles) {
+    driver.ParseAndLoadFilter(*_trafficFilterProfile.second); //XXX defensive check for NULL?
   }
 
-
   //instanciate all the virtual APs... (one per primary SSID)
-  for (auto i = _primaryDataMap.begin(); i != _primaryDataMap.end(); i++) {
-    const auto pssidName = i->first.c_str();
+  for (const auto &data : _primaryDataMap) {
+    const auto pssidName = data.first.c_str();
     const auto ifnameIter = _ssidIfnameMap.find(pssidName);
     if (ifnameIter == _ssidIfnameMap.end()) {
       //defensive
@@ -60,7 +59,7 @@ void APConfiguration::Apply(MacRemapperDriver& driver, VAPManager& vapman, ::dcw
     }
 
     //instanciate the actual VirtualAP object...
-    VirtualAP& vap = vapman.InstanciateVAP(
+    auto &vap = vapman.InstanciateVAP(
       pssidName,                    //primarySsidName
       ifnameIter->second.c_str(),   //primarySsidIfName
       *this,                        //devicePolicy
@@ -69,8 +68,8 @@ void APConfiguration::Apply(MacRemapperDriver& driver, VAPManager& vapman, ::dcw
     );
 
     //give it its data channels...
-    for (auto j = i->second.begin(); j != i->second.end(); j++) {
-      const auto dssidName = j->c_str();
+    for (const auto &channel : data.second) {
+      const auto dssidName = channel.c_str();
 
       //determine the data channel interface name (if any)
       auto dssidIfname = static_cast<const char *>(NULL); //note: this may be null...
@@ -92,26 +91,26 @@ void APConfiguration::Dump() const {
   dcwlogdbgf("%s\n", "AP Configuration Dump:");
 
   dcwlogdbgf("%s\n", "  Traffic Filter Profiles:");
-  for (auto i = _trafficFilterProfiles.begin(); i != _trafficFilterProfiles.end(); i++) {
-    dcwlogdbgf("    %s\n", i->second->GetName());
+  for (const auto &profile : _trafficFilterProfiles) {
+    dcwlogdbgf("    %s\n", profile.second->GetName());
   }
 
   dcwlogdbgf("%s\n", "  SSIDs:");
-  for (auto i = _primaryDataMap.begin(); i != _primaryDataMap.end(); i++) {
-    dcwlogdbgf("    Primary '%s'\n", i->first.c_str());
-    for(auto j = i->second.begin(); j != i->second.end(); j++) {
-      dcwlogdbgf("      Data '%s'\n", j->c_str());
+  for (const auto &primary : _primaryDataMap) {
+    dcwlogdbgf("    Primary '%s'\n", primary.first.c_str());
+    for (const auto &data : primary.second) {
+      dcwlogdbgf("      Data '%s'\n", data.c_str());
     }
   }
 
   dcwlogdbgf("%s\n", "  SSID Interfaces:");
-  for (auto i = _ssidIfnameMap.begin(); i != _ssidIfnameMap.end(); i++) {
-    dcwlogdbgf("    '%s' -> '%s'\n", i->first.c_str(), i->second.c_str());
+  for (const auto &ifname : _ssidIfnameMap) {
+    dcwlogdbgf("    '%s' -> '%s'\n", ifname.first.c_str(), ifname.second.c_str());
   }
 
   dcwlogdbgf("%s\n", "  Station Traffic Filter Profiles:");
-  for (auto i = _stationFilterProfiles.begin(); i != _stationFilterProfiles.end(); i++) {
-    dcwlogdbgf("    '%s' -> '%s'\n", i->first.ToString().c_str(), i->second->GetName());
+  for (const auto &filter : _stationFilterProfiles) {
+    dcwlogdbgf("    '%s' -> '%s'\n", filter.first.ToString().c_str(), filter.second->GetName());
   }
 }
 
@@ -164,17 +163,17 @@ void APConfiguration::LoadConfiguration(const APConfigurationProvider& conf) {
   //remember, it is OUR (the called or InstanciateCFileTrafficFilterProfiles()) to delete these...
   APConfigurationProvider::CFTFPList tfps;
   conf.InstanciateCFileTrafficFilterProfiles(tfps);
-  for (auto i = tfps.begin(); i != tfps.end(); i++) {
-    if ((*i) == NULL) {
+  for (const auto &tfp : tfps) {
+    if (tfp == NULL) {
       dcwlogwarnf("%s\n", "A NULL traffic filter profile was detected!");
       continue;
     }
-    if (_trafficFilterProfiles.find((*i)->GetName()) != _trafficFilterProfiles.end()) {
-      dcwlogwarnf("Ignoring existing traffic filter profile: %s\n", (*i)->GetName());
-      delete *i;
+    if (_trafficFilterProfiles.find(tfp->GetName()) != _trafficFilterProfiles.end()) {
+      dcwlogwarnf("Ignoring existing traffic filter profile: %s\n", tfp->GetName());
+      delete tfp;
       continue;
     }
-    _trafficFilterProfiles[(*i)->GetName()] = *i;
+    _trafficFilterProfiles[tfp->GetName()] = tfp;
   }
 
   //read in the primary SSIDs...
@@ -182,8 +181,8 @@ void APConfiguration::LoadConfiguration(const APConfigurationProvider& conf) {
   conf.GetPrimarySsids(primarySsids); //XXX... is it a good idea to load directly here? (as opposed to a seperate set declared here on the stack)
 
   //load each primary SSID's configuration...
-  for (auto pssidIter = primarySsids.begin(); pssidIter != primarySsids.end(); pssidIter++) {
-    const auto pssidName = pssidIter->c_str();
+  for (const auto &primarySsid : primarySsids) {
+    const auto pssidName = primarySsid.c_str();
 
     //create an entry in the primary data map...
     //note: not really necessary, but helps with
@@ -206,8 +205,8 @@ void APConfiguration::LoadConfiguration(const APConfigurationProvider& conf) {
     //get the associated data channels for this primary ssid...
     SsidSet dataSsids;
     conf.GetDataSsids(dataSsids, pssidName);
-    for (auto dssidIter = dataSsids.begin(); dssidIter != dataSsids.end(); dssidIter++) {
-      const auto dssidName = dssidIter->c_str();
+    for (const auto &dataSsid : dataSsids) {
+      const auto dssidName = dataSsid.c_str();
 
       //get the data channel's interface name (if any)
       const auto dssidIfName = conf.GetSsidIfname(dssidName);
@@ -237,8 +236,8 @@ void APConfiguration::LoadConfiguration(const APConfigurationProvider& conf) {
 
 void APConfiguration::Cleanup() {
   //delete any instanciated traffic filter profiles...
-  for (auto i = _trafficFilterProfiles.begin(); i != _trafficFilterProfiles.end(); i++) {
-    delete i->second;
+  for (const auto &trafficFilterProfile : _trafficFilterProfiles) {
+    delete trafficFilterProfile.second;
   }
   _trafficFilterProfiles.clear();
 }
@@ -246,18 +245,18 @@ void APConfiguration::Cleanup() {
 
 void APConfiguration::SelfValidate() const {
 
-  for (auto pdcIter = _primaryDataMap.begin(); pdcIter != _primaryDataMap.end(); pdcIter++) {
-    const auto pssidName = pdcIter->first.c_str();
+  for (const auto &pdc : _primaryDataMap) {
+    const auto pssidName = pdc.first.c_str();
 
     //ensure each primary SSID has at least one data channel
-    if (pdcIter->second.empty()) {
+    if (pdc.second.empty()) {
       dcwlogerrf("Configured primary SSID \"%s\" has no associated data channels\n", pssidName);
       throw ValidationFailureException();
     }
 
     //validate the associated data channels:
-    for (auto dssidIter = pdcIter->second.begin(); dssidIter != pdcIter->second.end(); dssidIter++) {
-      const auto dssidName = dssidIter->c_str();
+    for (const auto &dssid : pdc.second) {
+      const auto dssidName = dssid.c_str();
 
       //ensure the data ssid name is NOT used as a primary...
       if (_primaryDataMap.find(dssidName) != _primaryDataMap.end()) {
@@ -295,13 +294,13 @@ void APConfiguration::SelfValidate() const {
   }
 
   //ensure that the filter files are parsable...
-  for (tfpIter = _trafficFilterProfiles.begin(); tfpIter != _trafficFilterProfiles.end(); tfpIter++) {
-    if (tfpIter->second == NULL) {
-      dcwlogerrf("NULL traffic filter profile: %s\n", tfpIter->first.c_str());
+  for (const auto &tfp : _trafficFilterProfiles) {
+    if (tfp.second == NULL) {
+      dcwlogerrf("NULL traffic filter profile: %s\n", tfp.first.c_str());
       throw ValidationFailureException();
     }
-    if (!MacRemapperDriver::ValidateFilter(*tfpIter->second)) {
-      dcwlogerrf("Failed to parse filter \"%s\"\n", tfpIter->second->GetName());
+    if (!MacRemapperDriver::ValidateFilter(*tfp.second)) {
+      dcwlogerrf("Failed to parse filter \"%s\"\n", tfp.second->GetName());
       throw ValidationFailureException();
     }
   }

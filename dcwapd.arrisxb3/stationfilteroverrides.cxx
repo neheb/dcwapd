@@ -90,8 +90,8 @@ StationFilterOverrides::~StationFilterOverrides() {
 }
 
 void StationFilterOverrides::PopulateConfigProviderCollection(::ccspwrapper::Tr181ConfigProvider& parent, ConfigProviderCollection& collection) {
-  for (::dcwlinux::APConfigurationProvider::StationTFPMap::const_iterator i = _stationTfpMap.begin(); i != _stationTfpMap.end(); i++) {
-    collection.push_back(new SingleStationFilterOverride(i->first, _stationTfpMap));
+  for (const auto &tfp : _stationTfpMap) {
+    collection.push_back(new SingleStationFilterOverride(tfp.first, _stationTfpMap));
   }
 }
 

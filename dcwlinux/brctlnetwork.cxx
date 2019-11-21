@@ -95,8 +95,8 @@ const ::dcw::BasicChannel& BrctlNetwork::GetPrimaryChannel() const {
 }
 
 void BrctlNetwork::GetDataChannels(ChannelSet& output) const {
-  for (auto i = _dataChannels.begin(); i != _dataChannels.end(); i++) {
-    output.insert(&(*i));
+  for (const auto &dataChannel : _dataChannels) {
+    output.insert(&dataChannel);
   }
 }
 

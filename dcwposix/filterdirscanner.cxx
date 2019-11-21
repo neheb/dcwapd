@@ -63,8 +63,8 @@ void FilterdirScanner::Scan(FileFilterProfileList& output) {
 
     //validate the filter name dont already exist (defensive)
     try {
-      for (FileFilterProfileList::const_iterator i = output.begin(); i != output.end(); i++) {
-        if (filterName == i->GetName()) {
+      for (const auto &FileFilterName : output) {
+        if (filterName == FileFilterName.GetName()) {
           dcwlogerrf("Ignoring traffic filter profile: %s\n", filterFilePath.c_str());
           throw "";
         }

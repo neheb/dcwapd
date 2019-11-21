@@ -35,8 +35,8 @@ VAPManager::VAPManager() {
 }
 
 VAPManager::~VAPManager() {
-  for (auto i = _vaps.begin(); i != _vaps.end(); i++) {
-    delete(*i);
+  for (const auto &vap : _vaps) {
+    delete(vap);
   }
   _vaps.clear(); //defensive...
 }
@@ -49,14 +49,14 @@ VirtualAP& VAPManager::InstanciateVAP(
   ::dcw::EventReactor& eventReactor) {
 
   //first ensure the VAP dont already exist...
-  for (auto i = _vaps.begin(); i != _vaps.end(); i++) {
-    if (strcmp((*i)->GetPrimaryChannel().GetSsidName(), primarySsidName) == 0) {
+  for (const auto &vap : _vaps) {
+    if (strcmp(vap->GetPrimaryChannel().GetSsidName(), primarySsidName) == 0) {
       throw VAPAlreadyExistsException();
     }
   }
 
   //then instanciate it...
-  auto  const vap = new VirtualAP(
+  const auto vap = new VirtualAP(
     primarySsidName,
     primarySsidIfName,
     devicePolicy,
@@ -74,9 +74,9 @@ VirtualAP& VAPManager::InstanciateVAP(
 }
 
 VirtualAP& VAPManager::operator[](const char * const primarySsidName) const {
-  for (auto i = _vaps.begin(); i != _vaps.end(); i++) {
-    if (strcmp((*i)->GetPrimaryChannel().GetSsidName(), primarySsidName) == 0) {
-      return *(*i);
+  for (const auto &vap : _vaps) {
+    if (strcmp(vap->GetPrimaryChannel().GetSsidName(), primarySsidName) == 0) {
+      return *vap;
     }
   }
   throw VAPNotFoundException();
@@ -87,8 +87,8 @@ void DestroyVAP(const char * const primarySsidName) {
 }
 
 void VAPManager::SetAllTelemetryCollector(::dcw::TelemetryCollector * const tc) {
-  for (auto i = _vaps.begin(); i != _vaps.end(); i++) {
-    (*i)->SetTelemetryCollector(tc);
+  for (const auto &vap : _vaps) {
+    vap->SetTelemetryCollector(tc);
   }
 }
 

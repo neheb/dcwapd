@@ -32,9 +32,9 @@ ProcessSignalManager::ProcessSignalManager() {
 ProcessSignalManager::~ProcessSignalManager() {
   //restore all the preserved signals...
   //there should be none...
-  for (auto i = _sigmapPreserve.begin(); i != _sigmapPreserve.end(); i++) {
-    dcwlogwarnf("Restoring preserved process signal #%d that was NOT unregistered before this objects deconstruction!\n", i->first);
-    signal(i->first, i->second);
+  for (const auto &sig : _sigmapPreserve) {
+    dcwlogwarnf("Restoring preserved process signal #%d that was NOT unregistered before this objects deconstruction!\n", sig.first);
+    signal(sig.first, sig.second);
   }
   _sigman = NULL;
 }
@@ -93,8 +93,8 @@ void ProcessSignalManager::OnSignal(int signum) {
   }
 
   //fire off this signal to each registered handler...
-  for (auto handlerIter = i->second.begin(); handlerIter != i->second.end(); handlerIter++) {
-    (*handlerIter)->OnSignal(signum);
+  for (const auto &handlerIter : i->second) {
+    handlerIter->OnSignal(signum);
   }
 }
 

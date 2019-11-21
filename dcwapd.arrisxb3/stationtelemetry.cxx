@@ -86,8 +86,8 @@ struct SingleStation :
     if (_trafficFilterProfile == NULL) {
       return; //the data channels are NOT (yet) bonded
     }
-    for (::dcw::TrafficPolicy::DataChannelMap::const_iterator i = _dataChannels.begin(); i != _dataChannels.end(); ++i) { 
-      collection.push_back(new SingleStationDataChannel(i->first, _singleNetwork));
+    for (const auto &dataChannel : _dataChannels) {
+      collection.push_back(new SingleStationDataChannel(dataChannel.first, _singleNetwork));
       //Note: if you are looking for the delete it can be found in
       //      the base class "AutoDeleteTr181SubCollectionProvider"
     }
@@ -129,9 +129,9 @@ void StationTelemetry::PopulateConfigProviderCollection(::ccspwrapper::Tr181Conf
   //generate the list of stations and their states...
   pthread_mutex_lock(&_stationStatesLock);
   //note: none of the code in the critical section should throw anything...
-  for (StationStates::const_iterator i = _stationStates.begin(); i != _stationStates.end(); i++) {
-    collection.push_back(new SingleStation(i->first, _singleNetwork, i->second.dataChannels, i->second.trafficFilterProfile));
-    //Note: if you are looking for the delete it can be found in 
+  for (const auto &state : _stationStates) {
+    collection.push_back(new SingleStation(state.first, _singleNetwork, state.second.dataChannels, state.second.trafficFilterProfile));
+    //Note: if you are looking for the delete it can be found in
     //      the base class "AutoDeleteTr181SubCollectionProvider"
   }
   pthread_mutex_unlock(&_stationStatesLock);
